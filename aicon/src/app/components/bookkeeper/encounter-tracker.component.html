@@ -1,0 +1,70 @@
+<!--<div>
+  <mat-expansion-panel class="operations-panel">
+    <mat-expansion-panel-header>
+      <mat-panel-title >
+        <h2 style="width: 100%; cursor: pointer;">Operations</h2>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <button mat-stroked-button color="primary" (click)="openAddFoeDialog()">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">add</mat-icon>
+      <span>Foe</span>
+    </button>
+  </mat-expansion-panel>
+</div>-->
+
+<mat-drawer-container fullscreen>
+  <mat-drawer #drawer mode="over" style="width: 200px;">
+    <div fxLayout="column" fxLayoutAlign="center ">
+      <h3>Current Encounter</h3>
+      <button fxFlexFill mat-raised-button color="primary" (click)="openAddFoeDialog(); drawer.toggle()">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">add</mat-icon>
+        <span>Foe</span>
+      </button>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div style="background-color: mediumpurple;" fxLayout="row" fxLayoutAlign="space-between center">
+      <button mat-icon-button style="height: 64px; width: 64px;">
+        <mat-icon style="color: white; font-size: 40px; margin-left: -15px;" aria-hidden="false" aria-label="Example home icon" (click)="drawer.toggle()">menu</mat-icon>
+      </button>
+      <h2 style="margin: 0; color: white;">ICON COMBAT TRACKER</h2>
+      <div></div>
+    </div>
+    <div class="container">
+<!--      <div fxLayout="column" fxLayoutAlign=" stretch" style="min-height: 200px;">
+        <h2 class="pink">Turn {{encounterService.turn}}</h2>
+      </div>-->
+<!--
+      <div fxLayout="column" fxLayoutAlign=" stretch" style="min-height: 200px;">
+        <h2 class="pink">Notifications</h2>
+      </div>
+-->
+
+      <div fxLayout="column" fxLayoutAlign=" stretch">
+        <h2 class="pink" style="margin-bottom: 0;">Combatants</h2>
+      </div>
+      <!-- Mobile View -->
+      <mat-tab-group [fxHide.gt-md]="true" mat-stretch-tabs>
+        <mat-tab [label]="'Foes'">
+          <app-foe-view></app-foe-view>
+        </mat-tab>
+        <mat-tab [label]="'PCs'">
+
+        </mat-tab>
+      </mat-tab-group>
+
+      <!-- Desktop view -->
+      <div fxLayout="row" fxLayoutGap="20px" [fxHide.lt-lg]="true">
+        <div fxFlex="50" fxLayout="column" fxLayoutAlign=" stretch">
+          <h2 class="pink">PCs</h2>
+        </div>
+        <div fxFlex="50" fxLayout="column" fxLayoutAlign=" stretch">
+          <div>
+            <h2 class="pink">Foes</h2>
+          </div>
+          <app-foe-view></app-foe-view>
+        </div>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

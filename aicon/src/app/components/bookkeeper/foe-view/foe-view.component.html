@@ -1,0 +1,107 @@
+<div *ngFor="let foe of encounterService.foes" class="combatant-panel"
+     [ngClass]="{'heavy': foe.data.Group === 'Heavy', 'artillery' : foe.data.Group === 'Artillery',
+                     'leader': foe.data.Group === 'Leader', 'skirmisher' : foe.data.Group === 'Skirmisher',
+                     'elite' : foe.data.Group === 'Elite', 'mob' : foe.data.Group === 'Mob'}"
+>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header style="height: 50px;">
+      <mat-panel-title style="margin-right: 0;" fxLayout="row" fxLayoutAlign=" center">
+        <div fxFlex="20">{{foe.data.Name}}</div>
+        <div fxFlex="78" style="background-color: white; color:black; height:100%; border-radius: 8px; padding-left: 8px; padding-right: 8px;" fxLayout="row" fxLayoutAlign=" center">
+          <button mat-flat-button (click)="reduceHealth($event, foe)">
+            <div fxLayout="row" fxLayoutAlign=" center">
+              <mat-icon style="color: red;">favorite</mat-icon>
+              <div>{{foe.hpCurrent}}</div>
+            </div>
+          </button>
+          <button mat-flat-button (click)="reduceVigor($event, foe)">
+          <div fxLayout="row" fxLayoutAlign=" center">
+            <mat-icon style="color: dodgerblue;">shield_moon</mat-icon>
+            <div><b>{{foe.vigor}}</b></div>
+          </div>
+          </button>
+        </div>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="80">
+        <div fxLayout="row" fxLayoutAlign=" center" fxFlex="50">
+          <button mat-icon-button><mat-icon style="color: red;">favorite</mat-icon></button>
+          <mat-slider (input)="onHealthChange($event, foe)" style="width: 100%;"
+            [disabled]="false"
+            [invert]="false"
+            [max]="50"
+            [min]="0"
+            [step]="1"
+            [thumbLabel]="true"
+            [tickInterval]="1"
+            [(ngModel)]="foe.hpCurrent"
+            [vertical]="false"
+            >
+          </mat-slider>
+        </div>
+        <div fxLayout="row" fxLayoutAlign=" center" fxFlex="50">
+          <button mat-icon-button><mat-icon style="color: dodgerblue;">shield_moon</mat-icon></button>
+          <mat-slider (input)="onVigorChange($event, foe)" style="width: 100%;"
+            [disabled]="false"
+            [invert]="false"
+            [max]="50"
+            [min]="0"
+            [step]="1"
+            [thumbLabel]="true"
+            [tickInterval]="1"
+            [(ngModel)]="foe.vigor"
+            [vertical]="false"
+          >
+          </mat-slider>
+        </div>
+      </div>
+      <button *ngIf="!foeToDelete" mat-icon-button><mat-icon style="color: red;" (click)="delete(foe)">delete</mat-icon></button>
+      <button *ngIf="foeToDelete === foe" mat-icon-button><mat-icon style="color: red;" (click)="delete(foe)">delete_forever</mat-icon></button>
+    </div>
+    <br>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Damage</div><div>{{foe.lightDamageCurrent}} / {{foe.heavyDamageCurrent}} / {{foe.criticalDamageCurrent}}</div></div>
+      <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Fray</div><div>{{foe.data.FrayDamage[foe.chapter - 1]}}</div></div>
+      <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Attack</div><div>+{{foe.attackCurrent}}</div></div>
+      <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Damage Type</div><div>{{foe.data.DamageType}}</div></div>
+      <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Health</div><div>{{foe.data.Health[foe.chapter - 1]}}</div></div>
+      <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Defense</div><div>{{foe.defenseCurrent}}</div></div>
+      <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Armor</div><div>{{foe.armorCurrent}}</div></div>
+      <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Speed</div><div>{{foe.data.Speed}} {{foe.data.Run}}/{{foe.data.Dash}}</div></div>
+
+    </div>
+    <br>
+    <div fxLayout="row wrap" fxLayoutGap="20px grid" style="width: 100%;">
+      <div fxFlex="100">
+        <div class="pink-text">TRAITS</div>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between ">
+          <button mat-flat-button *ngFor="let trait of foe.data.Traits" matTooltip="{{trait.Description}}" #tooltip="matTooltip" (click)="tooltip.toggle()">{{trait.Name}}</button>
+        </div>
+      </div>
+      <div fxFlex="100">
+        <div class="pink-text">ACTIONS</div>
+        <div fxLayout="column" fxLayoutGap="20px grid">
+          <ng-container *ngFor="let action of foe.data.Actions">
+            <div [ngClass]="{'cursor-pointer': isRecharge(action), 'recharging': foe.isRecharging(action)}" (click)="toggleRecharge(action, foe)">
+              <b class="trait-tag">{{action.Name}} ({{action.ActionCost}} {{action.ActionCost > 1 ? 'actions' : 'action'}}
+                {{action.Tags ? ',' : ''}} {{action.Tags ? action.Tags.join(", ") : ' '}}): </b> {{action.Description}}
+              <span *ngIf="action.Hit"><i>On hit: </i>{{action.Hit}} </span>
+              <span *ngIf="action.Miss"><i>On miss: </i>{{action.Miss}} </span>
+              <span *ngIf="action.Effect">{{action.Effect}} </span>
+              <span *ngIf="action.Collide"><b>Collide: </b>{{action.Collide}} </span>
+              <span *ngIf="action.AreaEffect"><b>Area effect: </b>{{action.AreaEffect}}</span>
+              <span *ngIf="action.BlightBoost"><b>Blightboost: </b>{{action.BlightBoost}}</span>
+            </div>
+          </ng-container>
+          <ng-container *ngFor="let action of foe.data.Interrupts">
+            <div [ngClass]="{'cursor-pointer': isRecharge(action), 'recharging': foe.isRecharging(action)}" (click)="toggleRecharge(action, foe)">
+              <b class="trait-tag">{{action.Name}} (Interrupt{{action.Count ? ' ' : ''}}{{action.Count ? action.Count : ''}}{{action.Tags ? ', ' : ''}}{{action.Tags ? action.Tags.join(", ") : ''}}): </b> {{action.Description}}
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+  <br>
+</div>

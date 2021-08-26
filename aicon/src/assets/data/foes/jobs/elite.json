@@ -1,0 +1,10 @@
+{
+  "Name": "Elite",
+  "Group": "Elite",
+  "Traits": [
+    {
+      "Name": "Elite",
+      "Description": "Takes 2 turns."
+    }
+  ]
+}

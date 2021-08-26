@@ -1,0 +1,44 @@
+<div fxLayout="column" fxLayoutAlign="space-between ">
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Chapter</mat-label>
+      <mat-select [(ngModel)]="chapter">
+        <mat-option value="1">1</mat-option>
+        <mat-option value="2">2</mat-option>
+        <mat-option value="3">3</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br><br>
+    <div fxLayout="row wrap" fxLayoutGap="20px grid">
+      <mat-form-field fxFlex="50" appearance="fill">
+        <mat-label>Select Class</mat-label>
+        <mat-select [(ngModel)]="selectedClass">
+          <mat-option value="">None</mat-option>
+          <mat-option *ngFor="let foeClass of foeFactory.getClasses()" value="{{foeClass}}">{{foeClass}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="50" appearance="fill">
+        <mat-label>Select Job</mat-label>
+        <mat-select [(ngModel)]="selectedJob" (selectionChange)="jobChanged($event)" [disabled]="!selectedClass">
+          <mat-option value="">None</mat-option>
+          <mat-option *ngFor="let job of foeFactory.getJobs(selectedClass)" value="{{job}}">{{job}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="50" appearance="fill">
+        <mat-label>Select Faction (optional)</mat-label>
+        <mat-select [(ngModel)]="selectedFaction">
+          <mat-option value="">None</mat-option>
+          <mat-option *ngFor="let foeFaction of foeFactory.getFactions()" value="{{foeFaction}}">{{foeFaction}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="50" appearance="fill">
+        <mat-label>Select Template</mat-label>
+        <mat-select [(ngModel)]="selectedTemplate" (selectionChange)="templateChanged($event)" [disabled]="!selectedFaction">
+          <mat-option value="">None</mat-option>
+          <mat-option *ngFor="let template of foeFactory.getTemplates(selectedFaction)" value="{{template}}">{{template}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <button mat-raised-button color="primary" [disabled]="!chapter || !selectedClass || !selectedJob" (click)="addToEncounter()">Add to Encounter</button>
+</div>

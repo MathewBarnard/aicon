@@ -1,0 +1,24 @@
+.operations-panel {
+  box-shadow: none;
+
+  .mat-expansion-panel-header {
+    background-color: darkgray !important;
+    color: white !important;
+  }
+  .mat-panel-title {
+    color: white !important;
+  }
+
+  .mat-expansion-panel-header-title {
+    color: white !important;
+  }
+
+  ::ng-deep .mat-expansion-panel-header-description > .mat-expansion-indicator:after {
+    color: white !important;
+  }
+}
+
+.container {
+  margin-left: 20px;
+  margin-right: 20px;
+}

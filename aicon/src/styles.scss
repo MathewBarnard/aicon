@@ -1,0 +1,59 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: 'Droid Serif';
+  src: url('/assets/fonts/DroidSerif-Regular.ttf')  format('truetype');
+  font-weight: normal;
+}
+/*
+!* You can add global styles to this file, and also import other style files *!
+@font-face {
+  font-family: 'Droid Serif';
+  src: url('../src/assets/fonts/DroidSerif-Bold.ttf')  format('truetype');
+  font-weight: normal;
+}
+
+!* You can add global styles to this file, and also import other style files *!
+@font-face {
+  font-family: 'Droid Serif';
+  src: url('../src/assets/fonts/DroidSerif-Italic.ttf')  format('truetype');
+  font-weight: normal;
+}
+
+!* You can add global styles to this file, and also import other style files *!
+@font-face {
+  font-family: 'Droid Serif';
+  src: url('../src/assets/fonts/DroidSerif-BoldItalic.ttf')  format('truetype');
+  font-weight: normal;
+}*/
+
+html, body { height: 100%; }
+body { margin: 0; font-family: "Droid Serif", Roboto, "Helvetica Neue", sans-serif; }
+
+.container {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+h2 {
+  padding: 4px 16px 4px 16px;
+  border-radius: 4px;
+  &.pink {
+    background-color: mediumpurple;
+    color: white;
+  }
+}
+
+.pink-text {
+  background-color: darkgray;
+  color: white;
+  padding: 2px;
+  margin-bottom: 4px;
+}
+
+.heavy-text {
+  background-color: red;
+  color: white;
+  padding: 2px;
+}

@@ -1,0 +1,73 @@
+.combatant-panel {
+  &.heavy {
+    .mat-expansion-panel-header {
+      background-color: red !important;
+      color: white !important;
+    }
+  }
+
+  &.artillery {
+    .mat-expansion-panel-header {
+      background-color: cornflowerblue !important;
+      color: white !important;
+    }
+  }
+
+  &.leader {
+    .mat-expansion-panel-header {
+      background-color: green !important;
+      color: white !important;
+    }
+  }
+
+  &.skirmisher {
+    .mat-expansion-panel-header {
+      background-color: darkorange !important;
+      color: white !important;
+    }
+  }
+
+  &.elite {
+    .mat-expansion-panel-header {
+      background-color: purple !important;
+      color: white !important;
+    }
+  }
+
+  &.mob {
+    .mat-expansion-panel-header {
+      background-color: darkgray !important;
+      color: white !important;
+    }
+  }
+
+  .mat-panel-title {
+    color: white !important;
+  }
+
+  .mat-expansion-panel-header-title {
+    color: white !important;
+  }
+
+  ::ng-deep .mat-expansion-panel-header-description > .mat-expansion-indicator:after {
+    color: white !important;
+  }
+
+  ::ng-deep .mat-content {
+    height: 90%;
+  }
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.recharging {
+  opacity: 0.7;
+  color: darkred;
+
+  .trait-tag {
+    background-color: darkred;
+    color: white;
+  }
+}
