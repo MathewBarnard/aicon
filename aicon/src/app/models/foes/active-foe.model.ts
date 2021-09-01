@@ -1,5 +1,5 @@
 import {Action, Foe} from "./foe.model";
-import {Status} from "../enums/status.model";
+import {Status, StatusType} from "../enums/status.model";
 import {PositiveEffect} from "../enums/positive-effect.model";
 import {Observable, Subject} from "rxjs";
 import {EventEmitter} from "@angular/core";
@@ -18,15 +18,19 @@ export class ActiveFoe implements Deserializable<ActiveFoe>{
   healthCurrent: number;
   defenseCurrent: number;
   armorCurrent: number;
-  statuses: Status[];
   positiveEffects: PositiveEffect[];
+
+  positiveStatuses: PositiveStatuses;
+  statuses: Statuses;
+  blights: Blights;
 
   rechargingActions: any[];
 
   data: Foe;
 
   constructor() {
-    this.statuses = [];
+    this.statuses = new Statuses();
+
     this.positiveEffects = [];
     this.rechargingActions = [];
   }
@@ -41,6 +45,9 @@ export class ActiveFoe implements Deserializable<ActiveFoe>{
   deserialize(input: any): ActiveFoe {
     // noinspection TypeScriptValidateTypes
     Object.assign(this, input);
+    this.statuses = input.statuses ? new Statuses().deserialize(input.statuses) : new Statuses();
+    this.positiveStatuses = input.positiveStatuses ? new PositiveStatuses().deserialize(input.statuses) : new PositiveStatuses();
+    this.blights = input.blights ? new Blights().deserialize(input.blights) : new Blights();
     return this;
   }
 
@@ -148,3 +155,87 @@ export class ActiveFoe implements Deserializable<ActiveFoe>{
   }
 }
 
+export class Blights implements Deserializable<Blights> {
+  burning: boolean;
+  electrified: boolean;
+  frostbitten: boolean;
+  poisoned: boolean;
+
+  constructor() {
+    this.deserialize({
+      burning: false,
+      electrified: false,
+      frostbitten: false,
+      poisoned: false
+    });
+  }
+
+  deserialize(input: any): Blights {
+    Object.assign(this, input);
+    return this;
+  }
+}
+
+export class Statuses implements Deserializable<Statuses>{
+  blinded: boolean;
+  dazed: boolean;
+  hatredOfX: string;
+  pacified: boolean;
+  slow: boolean;
+  staggered: boolean;
+  stunned: boolean;
+  vulnerable: boolean;
+  winded: boolean;
+
+  constructor() {
+    this.deserialize({
+      blinded: false,
+      dazed: false,
+      hatredOfX: null,
+      pacified: false,
+      slow: false,
+      staggered: false,
+      stunned: false,
+      vulnerable: false,
+      winded: false
+    });
+  }
+
+  deserialize(input: any): Statuses {
+    Object.assign(this, input);
+    return this;
+  }
+}
+
+export class PositiveStatuses implements Deserializable<PositiveStatuses>{
+  counter: boolean;
+  defiance: boolean;
+  dodge: boolean;
+  evasion: boolean;
+  regenerationX: number;
+  stealth: boolean;
+  sturdy: boolean;
+  trueStrike: boolean;
+  unstoppable: boolean;
+  vigilance: boolean;
+
+  constructor() {
+    this.deserialize({
+      counter: false,
+      defiance: false,
+      dodge: false,
+      evasion: false,
+      regenerationX: null,
+      stealth: false,
+      sturdy: false,
+      trueStrike: false,
+      unstoppable: false,
+      vigilance: false
+    });
+  }
+
+  deserialize(input: any): PositiveStatuses {
+    Object.assign(this, input);
+    return this;
+  }
+}

@@ -8,100 +8,276 @@
       <mat-panel-title style="margin-right: 0;" fxLayout="row" fxLayoutAlign=" center">
         <div fxFlex="20">{{foe.data.Name}}</div>
         <div fxFlex="78" style="background-color: white; color:black; height:100%; border-radius: 8px; padding-left: 8px; padding-right: 8px;" fxLayout="row" fxLayoutAlign=" center">
-          <button mat-flat-button (click)="reduceHealth($event, foe)">
+          <button mat-flat-button class="small-button" style="padding-left: 10px; padding-right: 10px;">
             <div fxLayout="row" fxLayoutAlign=" center">
               <mat-icon style="color: red;">favorite</mat-icon>
               <div>{{foe.hpCurrent}}</div>
             </div>
           </button>
-          <button mat-flat-button (click)="reduceVigor($event, foe)">
-          <div fxLayout="row" fxLayoutAlign=" center">
-            <mat-icon style="color: dodgerblue;">shield_moon</mat-icon>
-            <div><b>{{foe.vigor}}</b></div>
-          </div>
+          <button mat-flat-button class="small-button" style="padding-right: 20px;">
+            <div fxLayout="row" fxLayoutAlign=" center">
+              <mat-icon style="color: dodgerblue;">shield_moon</mat-icon>
+              <div><b>{{foe.vigor}}</b></div>
+            </div>
           </button>
+          <div fxLayout="row" fxLayoutAlign=" center">
+            <button *ngIf="foe.positiveStatuses.counter" mat-button matTooltip="Counter" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Counter.png" alt=""></button>
+            <button *ngIf="foe.positiveStatuses.defiance" mat-button matTooltip="Dodge" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Defiance.png" alt=""></button>
+            <button *ngIf="foe.positiveStatuses.regenerationX" mat-button matTooltip="Regeneration 1" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Blessing.png" alt=""></button>
+            <button *ngIf="foe.positiveStatuses.stealth" mat-button matTooltip="Stealth" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Stealth.png" alt=""></button>
+            <button *ngIf="foe.positiveStatuses.sturdy" mat-button matTooltip="Sturdy" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Sturdy.png" alt=""></button>
+
+            <button *ngIf="foe.statuses.blinded" mat-button matTooltip="Blind" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Blinded.png" alt=""></button>
+            <button *ngIf="foe.statuses.dazed" mat-button matTooltip="Dazed" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Dazed.png" alt=""></button>
+            <button *ngIf="foe.statuses.pacified" mat-button matTooltip="Pacified" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Pacified.png" alt=""></button>
+            <button *ngIf="foe.statuses.staggered" mat-button matTooltip="Staggered" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Staggered.png" alt=""></button>
+            <button *ngIf="foe.statuses.stunned" mat-button matTooltip="Stunned" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Stunned.png" alt=""></button>
+            <button *ngIf="foe.statuses.slow" mat-button matTooltip="Slow" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Slow.png" alt=""></button>
+            <button *ngIf="foe.statuses.vulnerable" mat-button matTooltip="Vulnerable" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Vulnerable.png" alt=""></button>
+
+            <button *ngIf="foe.blights.burning" mat-button matTooltip="Burning" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Burning.png" alt=""></button>
+            <button *ngIf="foe.blights.electrified" mat-button matTooltip="Electrified" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Electrified.png" alt=""></button>
+            <button *ngIf="foe.blights.frostbitten" mat-button matTooltip="Frostbite" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Frostbite.png" alt=""></button>
+            <button *ngIf="foe.blights.poisoned" mat-button matTooltip="Poisoned" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Poisoned.png" alt=""></button>
+          </div>
         </div>
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-      <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="80">
-        <div fxLayout="row" fxLayoutAlign=" center" fxFlex="50">
-          <button mat-icon-button><mat-icon style="color: red;">favorite</mat-icon></button>
-          <mat-slider (input)="onHealthChange($event, foe)" style="width: 100%;"
-            [disabled]="false"
-            [invert]="false"
-            [max]="50"
-            [min]="0"
-            [step]="1"
-            [thumbLabel]="true"
-            [tickInterval]="1"
-            [(ngModel)]="foe.hpCurrent"
-            [vertical]="false"
-            >
-          </mat-slider>
-        </div>
-        <div fxLayout="row" fxLayoutAlign=" center" fxFlex="50">
-          <button mat-icon-button><mat-icon style="color: dodgerblue;">shield_moon</mat-icon></button>
-          <mat-slider (input)="onVigorChange($event, foe)" style="width: 100%;"
-            [disabled]="false"
-            [invert]="false"
-            [max]="50"
-            [min]="0"
-            [step]="1"
-            [thumbLabel]="true"
-            [tickInterval]="1"
-            [(ngModel)]="foe.vigor"
-            [vertical]="false"
-          >
-          </mat-slider>
-        </div>
-      </div>
-      <button *ngIf="!foeToDelete" mat-icon-button><mat-icon style="color: red;" (click)="delete(foe)">delete</mat-icon></button>
-      <button *ngIf="foeToDelete === foe" mat-icon-button><mat-icon style="color: red;" (click)="delete(foe)">delete_forever</mat-icon></button>
-    </div>
-    <br>
-    <div fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-      <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Damage</div><div>{{foe.lightDamageCurrent}} / {{foe.heavyDamageCurrent}} / {{foe.criticalDamageCurrent}}</div></div>
-      <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Fray</div><div>{{foe.data.FrayDamage[foe.chapter - 1]}}</div></div>
-      <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Attack</div><div>+{{foe.attackCurrent}}</div></div>
-      <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Damage Type</div><div>{{foe.data.DamageType}}</div></div>
-      <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Health</div><div>{{foe.data.Health[foe.chapter - 1]}}</div></div>
-      <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Defense</div><div>{{foe.defenseCurrent}}</div></div>
-      <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Armor</div><div>{{foe.armorCurrent}}</div></div>
-      <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Speed</div><div>{{foe.data.Speed}} {{foe.data.Run}}/{{foe.data.Dash}}</div></div>
+    <mat-tab-group>
+      <mat-tab [label]="'Stat Block'">
+        <br>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Damage</div><div>{{foe.lightDamageCurrent}} / {{foe.heavyDamageCurrent}} / {{foe.criticalDamageCurrent}}</div></div>
+          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Fray</div><div>{{foe.data.FrayDamage[foe.chapter - 1]}}</div></div>
+          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Attack</div><div>+{{foe.attackCurrent}}</div></div>
+          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Damage Type</div><div>{{foe.data.DamageType}}</div></div>
+          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Health</div><div>{{foe.data.Health[foe.chapter - 1]}}</div></div>
+          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Defense</div><div>{{foe.defenseCurrent}}</div></div>
+          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Armor</div><div>{{foe.armorCurrent}}</div></div>
+          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Speed</div><div>{{foe.data.Speed}} {{foe.data.Run}}/{{foe.data.Dash}}</div></div>
 
-    </div>
-    <br>
-    <div fxLayout="row wrap" fxLayoutGap="20px grid" style="width: 100%;">
-      <div fxFlex="100">
-        <div class="pink-text">TRAITS</div>
-        <div fxLayout="row wrap" fxLayoutAlign="space-between ">
-          <button mat-flat-button *ngFor="let trait of foe.data.Traits" matTooltip="{{trait.Description}}" #tooltip="matTooltip" (click)="tooltip.toggle()">{{trait.Name}}</button>
         </div>
-      </div>
-      <div fxFlex="100">
-        <div class="pink-text">ACTIONS</div>
-        <div fxLayout="column" fxLayoutGap="20px grid">
-          <ng-container *ngFor="let action of foe.data.Actions">
-            <div [ngClass]="{'cursor-pointer': isRecharge(action), 'recharging': foe.isRecharging(action)}" (click)="toggleRecharge(action, foe)">
-              <b class="trait-tag">{{action.Name}} ({{action.ActionCost}} {{action.ActionCost > 1 ? 'actions' : 'action'}}
-                {{action.Tags ? ',' : ''}} {{action.Tags ? action.Tags.join(", ") : ' '}}): </b> {{action.Description}}
-              <span *ngIf="action.Hit"><i>On hit: </i>{{action.Hit}} </span>
-              <span *ngIf="action.Miss"><i>On miss: </i>{{action.Miss}} </span>
-              <span *ngIf="action.Effect">{{action.Effect}} </span>
-              <span *ngIf="action.Collide"><b>Collide: </b>{{action.Collide}} </span>
-              <span *ngIf="action.AreaEffect"><b>Area effect: </b>{{action.AreaEffect}}</span>
-              <span *ngIf="action.BlightBoost"><b>Blightboost: </b>{{action.BlightBoost}}</span>
+        <br>
+        <div fxLayout="row wrap" fxLayoutGap="20px grid" style="width: 100%;">
+          <div fxFlex="100">
+            <div class="pink-text">TRAITS</div>
+            <div fxLayout="row wrap" fxLayoutAlign="space-between ">
+              <button mat-flat-button *ngFor="let trait of foe.data.Traits" matTooltip="{{trait.Description}}" #tooltip="matTooltip" class="no-zoom" (click)="tooltip.toggle()">{{trait.Name}}</button>
             </div>
-          </ng-container>
-          <ng-container *ngFor="let action of foe.data.Interrupts">
-            <div [ngClass]="{'cursor-pointer': isRecharge(action), 'recharging': foe.isRecharging(action)}" (click)="toggleRecharge(action, foe)">
-              <b class="trait-tag">{{action.Name}} (Interrupt{{action.Count ? ' ' : ''}}{{action.Count ? action.Count : ''}}{{action.Tags ? ', ' : ''}}{{action.Tags ? action.Tags.join(", ") : ''}}): </b> {{action.Description}}
+          </div>
+          <div fxFlex="100">
+            <div class="pink-text">ACTIONS</div>
+            <div fxLayout="column" fxLayoutGap="20px grid">
+              <ng-container *ngFor="let action of foe.data.Actions">
+                <div [ngClass]="{'cursor-pointer': isRecharge(action), 'recharging': foe.isRecharging(action)}" (click)="toggleRecharge(action, foe)">
+                  <b class="trait-tag">{{action.Name}} ({{action.ActionCost}} {{action.ActionCost > 1 ? 'actions' : 'action'}}
+                    {{action.Tags ? ',' : ''}} {{action.Tags ? action.Tags.join(", ") : ' '}}): </b> {{action.Description}}
+                  <span *ngIf="action.Hit"><i>On hit: </i>{{action.Hit}} </span>
+                  <span *ngIf="action.Miss"><i>On miss: </i>{{action.Miss}} </span>
+                  <span *ngIf="action.Effect">{{action.Effect}} </span>
+                  <span *ngIf="action.Collide"><b>Collide: </b>{{action.Collide}} </span>
+                  <span *ngIf="action.AreaEffect"><b>Area effect: </b>{{action.AreaEffect}}</span>
+                  <span *ngIf="action.BlightBoost"><b>Blightboost: </b>{{action.BlightBoost}}</span>
+                </div>
+              </ng-container>
+              <ng-container *ngFor="let action of foe.data.Interrupts">
+                <div [ngClass]="{'cursor-pointer': isRecharge(action), 'recharging': foe.isRecharging(action)}" (click)="toggleRecharge(action, foe)">
+                  <b class="trait-tag">{{action.Name}} (Interrupt{{action.Count ? ' ' : ''}}{{action.Count ? action.Count : ''}}{{action.Tags ? ', ' : ''}}{{action.Tags ? action.Tags.join(", ") : ''}}): </b> {{action.Description}}
+                </div>
+              </ng-container>
             </div>
-          </ng-container>
+          </div>
         </div>
-      </div>
-    </div>
+      </mat-tab>
+      <mat-tab [label]="'HP & Status'">
+        <div>
+          <h2 class="pink-text">Hit Points & Vigor</h2>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="80">
+              <div fxLayout="row" fxLayoutAlign=" center" fxFlex="50">
+                <button mat-icon-button><mat-icon style="color: red;">favorite</mat-icon></button>
+                <mat-slider (input)="onHealthChange($event, foe)" style="width: 100%;"
+                            [disabled]="false"
+                            [invert]="false"
+                            [max]="50"
+                            [min]="0"
+                            [step]="1"
+                            [thumbLabel]="true"
+                            [tickInterval]="1"
+                            [(ngModel)]="foe.hpCurrent"
+                            [vertical]="false"
+                >
+                </mat-slider>
+              </div>
+              <div fxLayout="row" fxLayoutAlign=" center" fxFlex="50">
+                <button mat-icon-button><mat-icon style="color: dodgerblue;">shield_moon</mat-icon></button>
+                <mat-slider (input)="onVigorChange($event, foe)" style="width: 100%;"
+                            [disabled]="false"
+                            [invert]="false"
+                            [max]="50"
+                            [min]="0"
+                            [step]="1"
+                            [thumbLabel]="true"
+                            [tickInterval]="1"
+                            [(ngModel)]="foe.vigor"
+                            [vertical]="false"
+                >
+                </mat-slider>
+              </div>
+            </div>
+            <button *ngIf="!foeToDelete" mat-icon-button><mat-icon style="color: red;" (click)="delete(foe)">delete</mat-icon></button>
+            <button *ngIf="foeToDelete === foe" mat-icon-button><mat-icon style="color: red;" (click)="delete(foe)">delete_forever</mat-icon></button>
+          </div>
+        </div>
+        <div>
+          <h2 class="pink-text">Blights</h2>
+          <br>
+          <div fxLayout="row wrap" fxLayoutAlign=" center" fxLayoutGap="30px grid">
+            <div fxFlex="25">
+              <button mat-flat-button [ngClass]="{'active-status': foe.blights.burning, 'inactive-status': !foe.blights.burning}" (click)="toggleBlight(BlightEnum.Burning, foe)">
+                <div  fxLayout="row" fxLayoutAlign=" center">
+                  <img src="assets/icons/status/Burning.png">
+                  <div>Burning</div>
+                </div>
+              </button>
+            </div>
+            <div fxFlex="25">
+              <button mat-flat-button [ngClass]="{'active-status': foe.blights.electrified, 'inactive-status': !foe.blights.electrified}" (click)="toggleBlight(BlightEnum.Electrified, foe)">
+                <div  fxLayout="row" fxLayoutAlign=" center">
+                  <img src="assets/icons/status/Electrified.png">
+                  <div>Electrified</div>
+                </div>
+              </button>
+            </div>
+            <div fxFlex="25">
+              <button mat-flat-button [ngClass]="{'active-status': foe.blights.frostbitten, 'inactive-status': !foe.blights.frostbitten}" (click)="toggleBlight(BlightEnum.Frostbite, foe)">
+                <div  fxLayout="row" fxLayoutAlign=" center">
+                  <img src="assets/icons/status/Frostbite.png">
+                  <div>Frostbite</div>
+                </div>
+              </button>
+            </div>
+            <div fxFlex="25">
+              <button mat-flat-button [ngClass]="{'active-status': foe.blights.poisoned, 'inactive-status': !foe.blights.poisoned}" (click)="toggleBlight(BlightEnum.Poisoned, foe)">
+                <div  fxLayout="row" fxLayoutAlign=" center">
+                  <img src="assets/icons/status/Poisoned.png">
+                  <div>Poisoned</div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2 class="pink-text">Status</h2>
+          <br>
+          <div fxLayout="row wrap" fxLayoutAlign=" center" fxLayoutGap="30px grid">
+            <div fxFlex="25">
+              <button mat-flat-button [ngClass]="{'active-status': foe.statuses.blinded, 'inactive-status': !foe.statuses.blinded}" (click)="toggleStatus(StatusTypeEnum.Blind, foe)">
+                <div  fxLayout="row" fxLayoutAlign=" center">
+                  <img src="assets/icons/status/Blinded.png">
+                  <div>Blinded</div>
+                </div>
+              </button>
+            </div>
+            <div fxFlex="25">
+              <button mat-flat-button [ngClass]="{'active-status': foe.statuses.dazed, 'inactive-status': !foe.statuses.dazed}" (click)="toggleStatus(StatusTypeEnum.Dazed, foe)">
+                <div  fxLayout="row" fxLayoutAlign=" center">
+                  <img src="assets/icons/status/Dazed.png">
+                  <div>Dazed</div>
+                </div>
+              </button>
+            </div>
+            <div fxFlex="25">
+              <button mat-flat-button [ngClass]="{'active-status': foe.statuses.pacified, 'inactive-status': !foe.statuses.pacified}" (click)="toggleStatus(StatusTypeEnum.Pacified, foe)">
+                <div  fxLayout="row" fxLayoutAlign=" center">
+                  <img src="assets/icons/status/Pacified.png">
+                  <div>Pacified</div>
+                </div>
+              </button>
+            </div>
+            <div fxFlex="25">
+              <button mat-flat-button [ngClass]="{'active-status': foe.statuses.slow, 'inactive-status': !foe.statuses.slow}" (click)="toggleStatus(StatusTypeEnum.Slow, foe)">
+                <div  fxLayout="row" fxLayoutAlign=" center">
+                  <img src="assets/icons/status/Slow.png">
+                  <div>Slow</div>
+                </div>
+              </button>
+            </div>
+            <div fxFlex="25">
+              <button mat-flat-button [ngClass]="{'active-status': foe.statuses.staggered, 'inactive-status': !foe.statuses.staggered}" (click)="toggleStatus(StatusTypeEnum.Staggered, foe)">
+                <div  fxLayout="row" fxLayoutAlign=" center">
+                  <img src="assets/icons/status/Staggered.png">
+                  <div>Staggered</div>
+                </div>
+              </button>
+            </div>
+            <div fxFlex="25">
+              <button mat-flat-button [ngClass]="{'active-status': foe.statuses.stunned, 'inactive-status': !foe.statuses.stunned}" (click)="toggleStatus(StatusTypeEnum.Stunned, foe)">
+                <div  fxLayout="row" fxLayoutAlign=" center">
+                  <img src="assets/icons/status/Stunned.png">
+                  <div>Stunned</div>
+                </div>
+              </button>
+            </div>
+            <div fxFlex="25">
+              <button mat-flat-button [ngClass]="{'active-status': foe.statuses.vulnerable, 'inactive-status': !foe.statuses.vulnerable}" (click)="toggleStatus(StatusTypeEnum.Vulnerable, foe)">
+                <div  fxLayout="row" fxLayoutAlign=" center">
+                  <img src="assets/icons/status/Vulnerable.png">
+                  <div>Vulnerable</div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+        </div>
+        <div>
+          <h2 class="pink-text">Positive Effects</h2>
+          <br>
+          <div fxLayout="row wrap" fxLayoutAlign=" center" fxLayoutGap="30px grid">
+            <div fxFlex="25">
+              <button mat-flat-button [ngClass]="{'active-status': foe.positiveStatuses.counter, 'inactive-status': !foe.positiveStatuses.counter}" (click)="togglePositiveEffect(PositiveEffectEnum.Counter, foe)">
+                <div  fxLayout="row" fxLayoutAlign=" center">
+                  <img src="assets/icons/status/Counter.png">
+                  <div>Counter</div>
+                </div>
+              </button>
+            </div>
+            <div fxFlex="25">
+              <button mat-flat-button [ngClass]="{'active-status': foe.positiveStatuses.defiance, 'inactive-status': !foe.positiveStatuses.defiance}" (click)="togglePositiveEffect(PositiveEffectEnum.Defiance, foe)">
+                <div  fxLayout="row" fxLayoutAlign=" center">
+                  <img src="assets/icons/status/Defiance.png">
+                  <div>Defiance</div>
+                </div>
+              </button>
+            </div>
+            <div fxFlex="25">
+              <button mat-flat-button [ngClass]="{'active-status': foe.positiveStatuses.regenerationX, 'inactive-status': !foe.positiveStatuses.regenerationX}" (click)="togglePositiveEffect(PositiveEffectEnum.RegenerationX, foe)">
+                <div  fxLayout="row" fxLayoutAlign=" center">
+                  <img src="assets/icons/status/Blessing.png">
+                  <div>Regeneration 1</div>
+                </div>
+              </button>
+            </div>
+            <div fxFlex="25">
+              <button mat-flat-button [ngClass]="{'active-status': foe.positiveStatuses.stealth, 'inactive-status': !foe.positiveStatuses.stealth}" (click)="togglePositiveEffect(PositiveEffectEnum.Stealth, foe)">
+                <div  fxLayout="row" fxLayoutAlign=" center">
+                  <img src="assets/icons/status/Stealth.png">
+                  <div>Stealth</div>
+                </div>
+              </button>
+            </div>
+            <div fxFlex="25">
+              <button mat-flat-button [ngClass]="{'active-status': foe.positiveStatuses.sturdy, 'inactive-status': !foe.positiveStatuses.sturdy}" (click)="togglePositiveEffect(PositiveEffectEnum.Sturdy, foe)">
+                <div  fxLayout="row" fxLayoutAlign=" center">
+                  <img src="assets/icons/status/Sturdy.png">
+                  <div>Sturdy</div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </mat-expansion-panel>
   <br>
 </div>

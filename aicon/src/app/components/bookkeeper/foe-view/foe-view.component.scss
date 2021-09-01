@@ -56,6 +56,18 @@
   ::ng-deep .mat-content {
     height: 90%;
   }
+
+  ::ng-deep .mat-tab-body-wrapper {
+    overflow: visible;
+  }
+
+  ::ng-deep .mat-tab-body {
+    overflow: visible;
+  }
+
+  ::ng-deep .mat-tab-body-content {
+    overflow: visible;
+  }
 }
 
 .cursor-pointer{
@@ -70,4 +82,32 @@
     background-color: darkred;
     color: white;
   }
+}
+
+.inactive-status {
+  img {
+    width: 32px;
+    height: 32px;
+    padding-right: 5px;
+    opacity: 0.2;
+  }
+}
+
+.active-status {
+  img {
+    width: 32px;
+    height: 32px;
+    padding-right: 5px;
+    opacity: 1;
+  }
+}
+
+.small-button {
+  padding: 0;
+  min-width: 26px;
+}
+
+.small-icon {
+    width: 26px;
+    height: 26px;
 }

@@ -165,5 +165,8 @@ export enum DamageType {
 }
 
 export enum Blight {
-
+  Burning,
+  Electrified,
+  Frostbite,
+  Poisoned
 }

@@ -24,6 +24,7 @@ import { HealthAndVigorModalComponent } from './components/bookkeeper/modals/hea
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import {MatOptionModule} from "@angular/material/core";
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import {MatOptionModule} from "@angular/material/core";
     MatTooltipModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatOptionModule
+    MatOptionModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
