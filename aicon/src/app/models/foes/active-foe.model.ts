@@ -30,12 +30,14 @@ export class ActiveFoe implements Deserializable<ActiveFoe>{
 
   constructor() {
     this.statuses = new Statuses();
+    this.positiveStatuses = new PositiveStatuses();
+    this.blights = new Blights();
 
     this.positiveEffects = [];
     this.rechargingActions = [];
   }
 
-  createNew(chapter: number, data: Foe) {
+  createNew(chapter: number, data: Foe): void {
     if (chapter && data) {
       this.data = data;
       this.generateStartingStats(chapter);
@@ -46,7 +48,7 @@ export class ActiveFoe implements Deserializable<ActiveFoe>{
     // noinspection TypeScriptValidateTypes
     Object.assign(this, input);
     this.statuses = input.statuses ? new Statuses().deserialize(input.statuses) : new Statuses();
-    this.positiveStatuses = input.positiveStatuses ? new PositiveStatuses().deserialize(input.statuses) : new PositiveStatuses();
+    this.positiveStatuses = input.positiveStatuses ? new PositiveStatuses().deserialize(input.positiveStatuses) : new PositiveStatuses();
     this.blights = input.blights ? new Blights().deserialize(input.blights) : new Blights();
     return this;
   }
@@ -58,9 +60,9 @@ export class ActiveFoe implements Deserializable<ActiveFoe>{
     //// DAMAGE
     this.lightDamageCurrent = this.data.LightDamage + this.chapter;
     this.heavyDamageCurrent = this.data.HeavyDamage + this.chapter;
-    this.criticalDamageCurrent = this.data.CriticalDamage + this.chapter
+    this.criticalDamageCurrent = this.data.CriticalDamage + this.chapter;
 
-    this.attackCurrent = this.data.Attack[this.chapter -1];
+    this.attackCurrent = this.data.Attack[this.chapter - 1];
 
     ////////////////////////////////////////////////////////////////////////////////////
     //// HP
@@ -106,12 +108,19 @@ export class ActiveFoe implements Deserializable<ActiveFoe>{
 
     ////////////////////////////////////////////////////////////////////////////////////
     /// DEFENSE
-    let defense = this.data.Defense;
+    const defense = this.data.Defense;
     this.defenseCurrent = defense;
+
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    /// TRAITS
+    if (this.data.Traits.map(t => t.Name).includes('Slow')) {
+      this.statuses.slow = true;
+    }
   }
 
   reduceHp(value: number): number {
-    if (this.hpCurrent === 0) {return;}
+    if (this.hpCurrent === 0) { return; }
 
     this.hpCurrent -= value;
 
@@ -125,7 +134,7 @@ export class ActiveFoe implements Deserializable<ActiveFoe>{
   }
 
   reduceVigor(value: number): number {
-    if (this.vigor === 0) {return;}
+    if (this.vigor === 0) { return; }
 
     this.vigor -= value;
 
@@ -142,7 +151,7 @@ export class ActiveFoe implements Deserializable<ActiveFoe>{
     return this.rechargingActions.map(a => a.Name).includes(action.Name);
   }
 
-  toggleActionRecharging(action) {
+  toggleActionRecharging(action): void {
     if (this.isRecharging(action)) {
       const i = this.rechargingActions.map(a => a.Name).indexOf(action.Name);
       if (i > -1) {

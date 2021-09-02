@@ -21,24 +21,24 @@
             </div>
           </button>
           <div fxLayout="row" fxLayoutAlign=" center">
-            <button *ngIf="foe.positiveStatuses.counter" mat-button matTooltip="Counter" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Counter.png" alt=""></button>
-            <button *ngIf="foe.positiveStatuses.defiance" mat-button matTooltip="Dodge" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Defiance.png" alt=""></button>
-            <button *ngIf="foe.positiveStatuses.regenerationX" mat-button matTooltip="Regeneration 1" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Blessing.png" alt=""></button>
-            <button *ngIf="foe.positiveStatuses.stealth" mat-button matTooltip="Stealth" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Stealth.png" alt=""></button>
-            <button *ngIf="foe.positiveStatuses.sturdy" mat-button matTooltip="Sturdy" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Sturdy.png" alt=""></button>
+            <button (click)="$event.stopPropagation()" *ngIf="foe.positiveStatuses.counter" mat-button matTooltipClass="tooltip" matTooltip="Counter - Deal fray damage to your attacker after being attacked. Hit or miss." class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Counter.png" alt=""></button>
+            <button (click)="$event.stopPropagation()" *ngIf="foe.positiveStatuses.defiance" mat-button matTooltipClass="tooltip" matTooltip="Defiance - Prevents hit points from being reduced past 1 HP. Remove when triggered." class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Defiance.png" alt=""></button>
+            <button (click)="$event.stopPropagation()" *ngIf="foe.positiveStatuses.regenerationX" mat-button matTooltipClass="tooltip" matTooltip="Regeneration 1 - Gain Vigor 1 at the end of your turn." class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Blessing.png" alt=""></button>
+            <button (click)="$event.stopPropagation()" *ngIf="foe.positiveStatuses.stealth" mat-button matTooltipClass="tooltip" matTooltip="Stealth - Cannot be directly targeted except from an adjacent space. Breaks on taking or dealing damage." class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Stealth.png" alt=""></button>
+            <button (click)="$event.stopPropagation()" *ngIf="foe.positiveStatuses.sturdy" mat-button matTooltipClass="tooltip" matTooltip="Sturdy - Immune to shove, daze, stagger and stun." class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Sturdy.png" alt=""></button>
 
-            <button *ngIf="foe.statuses.blinded" mat-button matTooltip="Blind" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Blinded.png" alt=""></button>
-            <button *ngIf="foe.statuses.dazed" mat-button matTooltip="Dazed" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Dazed.png" alt=""></button>
-            <button *ngIf="foe.statuses.pacified" mat-button matTooltip="Pacified" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Pacified.png" alt=""></button>
-            <button *ngIf="foe.statuses.staggered" mat-button matTooltip="Staggered" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Staggered.png" alt=""></button>
-            <button *ngIf="foe.statuses.stunned" mat-button matTooltip="Stunned" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Stunned.png" alt=""></button>
-            <button *ngIf="foe.statuses.slow" mat-button matTooltip="Slow" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Slow.png" alt=""></button>
-            <button *ngIf="foe.statuses.vulnerable" mat-button matTooltip="Vulnerable" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Vulnerable.png" alt=""></button>
+            <button (click)="$event.stopPropagation()" *ngIf="foe.statuses.blinded" mat-button matTooltipClass="tooltip" matTooltip="Blind - Can only target adjacent spaces." class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Blinded.png" alt=""></button>
+            <button (click)="$event.stopPropagation()" *ngIf="foe.statuses.dazed" mat-button matTooltipClass="tooltip" matTooltip="Dazed - +1 curse on attacks." class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Dazed.png" alt=""></button>
+            <button (click)="$event.stopPropagation()" *ngIf="foe.statuses.pacified" mat-button matTooltipClass="tooltip" matTooltip="Pacified - Max damage reduced to 1. Breaks on taking damage from an ability or action." class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Pacified.png" alt=""></button>
+            <button (click)="$event.stopPropagation()" *ngIf="foe.statuses.staggered" mat-button matTooltipClass="tooltip" matTooltip="Staggered - Attackers gain +1 Boon." class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Staggered.png" alt=""></button>
+            <button (click)="$event.stopPropagation()" *ngIf="foe.statuses.stunned" mat-button matTooltipClass="tooltip" matTooltip="Stunned - Take 1 less action. Automatically clear at end of turn." class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Stunned.png" alt=""></button>
+            <button (click)="$event.stopPropagation()" *ngIf="foe.statuses.slow" mat-button matTooltipClass="tooltip" matTooltip="Slow - Must take slow turns" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Slow.png" alt=""></button>
+            <button (click)="$event.stopPropagation()" *ngIf="foe.statuses.vulnerable" mat-button matTooltipClass="tooltip" matTooltip="Vulnerable - +1 on all damage taken." class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Vulnerable.png" alt=""></button>
 
-            <button *ngIf="foe.blights.burning" mat-button matTooltip="Burning" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Burning.png" alt=""></button>
-            <button *ngIf="foe.blights.electrified" mat-button matTooltip="Electrified" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Electrified.png" alt=""></button>
-            <button *ngIf="foe.blights.frostbitten" mat-button matTooltip="Frostbite" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Frostbite.png" alt=""></button>
-            <button *ngIf="foe.blights.poisoned" mat-button matTooltip="Poisoned" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Poisoned.png" alt=""></button>
+            <button (click)="$event.stopPropagation()" *ngIf="foe.blights.burning" mat-button matTooltipClass="tooltip" matTooltip="Burning" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Burning.png" alt=""></button>
+            <button (click)="$event.stopPropagation()" *ngIf="foe.blights.electrified" mat-button matTooltipClass="tooltip" matTooltip="Electrified" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Electrified.png" alt=""></button>
+            <button (click)="$event.stopPropagation()" *ngIf="foe.blights.frostbitten" mat-button matTooltipClass="tooltip" matTooltip="Frostbite" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Frostbite.png" alt=""></button>
+            <button (click)="$event.stopPropagation()" *ngIf="foe.blights.poisoned" mat-button matTooltipClass="tooltip" matTooltip="Poisoned" class="small-button no-zoom"><img class="small-icon" src="assets/icons/status/Poisoned.png" alt=""></button>
           </div>
         </div>
       </mat-panel-title>
@@ -62,7 +62,7 @@
           <div fxFlex="100">
             <div class="pink-text">TRAITS</div>
             <div fxLayout="row wrap" fxLayoutAlign="space-between ">
-              <button mat-flat-button *ngFor="let trait of foe.data.Traits" matTooltip="{{trait.Description}}" #tooltip="matTooltip" class="no-zoom" (click)="tooltip.toggle()">{{trait.Name}}</button>
+              <button mat-flat-button *ngFor="let trait of foe.data.Traits" matTooltip="{{trait.Description}}" #tooltip="matTooltip" class="no-zoom"  matTooltipClass="tooltip" (click)="tooltip.toggle()">{{trait.Name}}</button>
             </div>
           </div>
           <div fxFlex="100">
