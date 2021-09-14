@@ -5,5 +5,5 @@ An mobile-friendly assistant for ICON GM's.
 - [ ] Character Sheet Editor
 - [x] Factions/Templates Added to Foe Creation
 - [ ] Monstrosity Support
-- [ ] Status display to track stances, buffs & debuffs on combatants.
+- [ ] **[In Progress]** Status display to track stances, buffs & debuffs on combatants.
 - [ ] Import feature to allow custom Foes to be added to encounters.
