@@ -49,23 +49,29 @@
             </button>
           </div>
         </mat-tab>
-        <mat-tab [label]="'PCs'">
+        <!--<mat-tab [label]="'PCs'">
 
-        </mat-tab>
+        </mat-tab>-->
       </mat-tab-group>
 
       <!-- Desktop view -->
-      <div fxLayout="row" fxLayoutGap="20px" [fxHide.lt-lg]="true">
-        <div fxFlex="50" fxLayout="column" fxLayoutAlign=" stretch">
+      <div fxLayout="row" fxLayoutGap="20px" [fxHide.lt-lg]="true" fxLayoutAlign="center ">
+        <!--<div fxFlex="50" fxLayout="column" fxLayoutAlign=" stretch">
           <h2 class="pink-text">PCs</h2>
           <br>
-        </div>
-        <div fxFlex="50" fxLayout="column" fxLayoutAlign=" stretch">
+        </div>-->
+        <div fxFlex="50" fxLayout="column" fxLayoutAlign="center ">
           <div>
             <h2 class="pink-text">Foes</h2>
             <br>
           </div>
           <app-foe-view></app-foe-view>
+          <div fxLayout="column">
+            <button mat-stroked-button color="primary" (click)="openAddFoeDialog()">
+              <mat-icon aria-hidden="false" aria-label="Example home icon">add</mat-icon>
+              <span>Foe</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
