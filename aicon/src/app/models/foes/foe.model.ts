@@ -9,8 +9,8 @@ export class Foe implements Deserializable<Foe> {
   Type: string;
   Group: string;
   Health: number[];
-  HpMultiplier: number;
-  HpMultiplierByPlayers: boolean;
+  HPMultiplier: number;
+  HPMultiplierByPlayers: boolean;
   Speed: number;
   Run: number;
   Dash: number;
@@ -61,7 +61,7 @@ export class Foe implements Deserializable<Foe> {
 
     // Inherit single values
     if (this.Group) { newFoe.Group = this.Group; } else { newFoe.Group = otherFoe.Group; }
-    newFoe.HpMultiplier = this.inheritValue(this.HpMultiplier, otherFoe.HpMultiplier);
+    newFoe.HPMultiplier = this.inheritValue(this.HPMultiplier, otherFoe.HPMultiplier);
     newFoe.Speed = this.inheritValue(this.Speed, otherFoe.Speed);
     newFoe.Run = this.inheritValue(this.Run, otherFoe.Run);
     newFoe.Dash = this.inheritValue(this.Dash, otherFoe.Dash);

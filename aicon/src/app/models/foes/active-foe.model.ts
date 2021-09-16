@@ -63,7 +63,7 @@ export class ActiveFoe implements Deserializable<ActiveFoe>{
 
     ////////////////////////////////////////////////////////////////////////////////////
     //// HP
-    let hp = this.data.Health[this.chapter - 1] * this.data.HpMultiplier;
+    let hp = this.data.Health[this.chapter - 1] * (this.data.HPMultiplier ? this.data.HPMultiplier : 4);
 
     if (this.data.Traits.map(t => t.Name).includes('Tenacious')) {
       hp = Math.round(hp * 1.25);
