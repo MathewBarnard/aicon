@@ -1,9 +1,6 @@
-import {Action, Foe} from "./foe.model";
-import {Status, StatusType} from "../enums/status.model";
-import {PositiveEffect} from "../enums/positive-effect.model";
-import {Observable, Subject} from "rxjs";
-import {EventEmitter} from "@angular/core";
-import {Deserializable} from "../deserializable.interface";
+import {Foe} from './foe.model';
+import {PositiveEffect} from '../enums/positive-effect.model';
+import {Deserializable} from '../deserializable.interface';
 
 export class ActiveFoe implements Deserializable<ActiveFoe>{
   chapter: number;
@@ -66,7 +63,7 @@ export class ActiveFoe implements Deserializable<ActiveFoe>{
 
     ////////////////////////////////////////////////////////////////////////////////////
     //// HP
-    let hp = this.data.Health[this.chapter - 1] * 4;
+    let hp = this.data.Health[this.chapter - 1] * this.data.HpMultiplier;
 
     if (this.data.Traits.map(t => t.Name).includes('Tenacious')) {
       hp = Math.round(hp * 1.25);

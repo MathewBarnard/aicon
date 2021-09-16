@@ -47,7 +47,7 @@
       <mat-tab [label]="'Stat Block'">
         <br>
         <div fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Damage</div><div>[{{foe.data.LightDamageDie}} / {{foe.data.HeavyDamageDie}} / {{foe.data.CriticalDamageDie}}] +{{foe.chapter}}</div></div>
+          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Damage</div><div>{{foe.lightDamageCurrent}} / {{foe.heavyDamageCurrent}} / {{foe.criticalDamageCurrent}}</div></div>
           <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Fray</div><div>{{foe.data.FrayDamage[foe.chapter - 1]}}</div></div>
           <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Attack</div><div>+{{foe.attackCurrent}}</div></div>
           <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Damage Type</div><div>{{foe.data.DamageType}}</div></div>

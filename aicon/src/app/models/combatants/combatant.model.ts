@@ -1,37 +1,59 @@
-export class Combatant {
-  currentStats: StatBlock;
-  stats: { 1: StatBlock, 2: StatBlock, 3: StatBlock }
+export class BodyPart {
+  Name: string;
+  HP: number;
+  Description: string;
 }
 
-export class Speed {
-  base: number;
-  run: number;
-  dash: number;
-  constructor(base: number, run: number, dash: number) {
-    this.base = base;
-    this.run = run;
-    this.dash = dash;
-  }
+
+export class Phase {
+  Name: string;
+  Description: string;
+  Traits: Trait[];
+  Actions: Action[];
 }
 
-export class StatBlock {
-  health: number;
-  hp: number;
-  attack: number;
-  armor: number;
-  defense: number;
-  speed: Speed;
-  frayDamage: number;
+export class Trait {
+  Name: string;
+  Tags: string[];
+  Description: string;
+  AddHp: number;
+  AddArmor: number;
+  MaxArmor: number;
+  NoRun: boolean;
+  NoDash: boolean;
+  Nonessential: boolean;
+}
 
-  constructor(health: number, hp: number, attack: number, armor: number,
-              defense: number, baseSpeed: number, run: number, dash: number,
-              frayDamage: number) {
-    this.health = health;
-    this.hp = hp;
-    this.attack = attack;
-    this.armor = armor;
-    this.defense = defense;
-    this.speed = new Speed(baseSpeed, run, dash);
-    this.frayDamage = frayDamage;
-  }
+export class Interrupt {
+  Name: string;
+  Count: number;
+  Tags: string[];
+  Description: string;
+}
+
+export class Action {
+  Name: string;
+  ActionCost: number;
+  Tags: string[];
+  Description: string;
+  Hit: string;
+  CriticalHit: string;
+  Miss: string;
+  AreaEffect: string;
+  Effect: string;
+  Collide: string;
+  BlightBoost: Blight[];
+  Combos: Action[];
+}
+
+export enum DamageType {
+  Physical,
+  Magical
+}
+
+export enum Blight {
+  Burning,
+  Electrified,
+  Frostbite,
+  Poisoned
 }

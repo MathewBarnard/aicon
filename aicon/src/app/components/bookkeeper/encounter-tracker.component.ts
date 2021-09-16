@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {EncounterService} from "../../services/encounter.service";
-import {AbilityService} from "../../services/ability.service";
 import {MatDialog} from "@angular/material/dialog";
 import {AddFoeModalComponent} from "./modals/add-foe-modal/add-foe-modal.component";
 import {FoeFactory} from "../../models/foes/foe-factory";
@@ -12,7 +11,7 @@ import {FoeFactory} from "../../models/foes/foe-factory";
 })
 export class EncounterTrackerComponent implements OnInit {
 
-  constructor(public abilityService: AbilityService, public encounterService: EncounterService, public foeFactory: FoeFactory,
+  constructor(public encounterService: EncounterService, public foeFactory: FoeFactory,
               private dialog: MatDialog) { }
 
   ngOnInit(): void {}
@@ -24,6 +23,7 @@ export class EncounterTrackerComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if (!result) { return; }
       this.encounterService.createNewFoe(result.foe, result.chapter);
     });
   }

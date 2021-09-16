@@ -15,11 +15,6 @@
 <mat-drawer-container fullscreen>
   <mat-drawer #drawer mode="over" style="width: 200px;">
     <div fxLayout="column" fxLayoutAlign="center ">
-      <h3>Current Encounter</h3>
-      <button fxFlexFill mat-raised-button color="primary" (click)="openAddFoeDialog(); drawer.toggle()">
-        <mat-icon aria-hidden="false" aria-label="Example home icon">add</mat-icon>
-        <span>Foe</span>
-      </button>
     </div>
   </mat-drawer>
   <mat-drawer-content>
@@ -47,6 +42,12 @@
       <mat-tab-group [fxHide.gt-md]="true" mat-stretch-tabs>
         <mat-tab [label]="'Foes'">
           <app-foe-view></app-foe-view>
+          <div fxLayout="column">
+            <button mat-stroked-button color="primary" (click)="openAddFoeDialog()">
+              <mat-icon aria-hidden="false" aria-label="Example home icon">add</mat-icon>
+              <span>Foe</span>
+            </button>
+          </div>
         </mat-tab>
         <mat-tab [label]="'PCs'">
 

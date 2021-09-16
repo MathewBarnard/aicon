@@ -1,18 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {EncounterService} from '../../../services/encounter.service';
-import {MatDialog} from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
 import {ActiveFoe} from '../../../models/foes/active-foe.model';
 import {StatusType} from '../../../models/enums/status.model';
 import {PositiveEffectType} from '../../../models/enums/positive-effect.model';
+import {EncounterService} from '../../../services/encounter.service';
+import {MatDialog} from '@angular/material/dialog';
 import {Blight} from '../../../models/combatants/combatant.model';
-import {AddFoeModalComponent} from '../modals/add-foe-modal/add-foe-modal.component';
 
 @Component({
-  selector: 'app-foe-view',
-  templateUrl: './foe-view.component.html',
-  styleUrls: ['./foe-view.component.scss']
+  selector: 'app-combatant-view',
+  templateUrl: './combatant-view.component.html',
+  styleUrls: ['./combatant-view.component.scss']
 })
-export class FoeViewComponent implements OnInit {
+export class CombatantViewComponent implements OnInit {
 
   foeToDelete: ActiveFoe;
   BlightEnum = Blight;
@@ -26,7 +25,7 @@ export class FoeViewComponent implements OnInit {
 
   reduceHealth(event, foe): void {
     event.stopPropagation();
-    if (foe.hpCurrent === 0) {return; }
+    if (foe.hpCurrent === 0) { return; }
 
     foe.reduceHp(1);
     this.encounterService.save();
@@ -35,7 +34,7 @@ export class FoeViewComponent implements OnInit {
   reduceVigor(event, foe): void {
     event.stopPropagation();
 
-    if (foe.vigor === 0) {return; }
+    if (foe.vigor === 0) { return; }
     foe.reduceVigor(1);
     this.encounterService.save();
   }
@@ -161,16 +160,5 @@ export class FoeViewComponent implements OnInit {
     } else {
       this.foeToDelete = foe;
     }
-  }
-
-  openAddFoeDialog(): void {
-    const dialogRef = this.dialog.open(AddFoeModalComponent, {
-      height: '400px',
-      width: '600px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.encounterService.createNewFoe(result.foe, result.chapter);
-    });
   }
 }

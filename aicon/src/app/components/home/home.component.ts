@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {Foe} from "../../models/foes/foe.model";
-import {AbilityService} from "../../services/ability.service";
 
 @Component({
   selector: 'app-home',
@@ -11,7 +10,7 @@ export class HomeComponent implements OnInit {
 
   enemies: Foe[];
 
-  constructor(private abilityService: AbilityService) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.enemies = [

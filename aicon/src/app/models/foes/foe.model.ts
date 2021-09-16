@@ -1,5 +1,5 @@
-import {StatBlock} from "../combatants/combatant.model";
-import {Deserializable} from "../deserializable.interface";
+import {Deserializable} from '../deserializable.interface';
+import {Action, BodyPart, Interrupt, Phase, Trait} from "../combatants/combatant.model";
 
 export class Foe implements Deserializable<Foe> {
   // Base Stats
@@ -24,7 +24,7 @@ export class Foe implements Deserializable<Foe> {
   LightDamageDie: string;
   HeavyDamageDie: string;
   CriticalDamageDie: string;
-  DamageType: DamageType;
+  DamageType: string;
   SetupTraits: Trait[];
   Traits: Trait[];
   Interrupts: Interrupt[];
@@ -53,14 +53,14 @@ export class Foe implements Deserializable<Foe> {
     return this;
   }
 
-  inheritFrom(otherFoe: Foe) {
+  inheritFrom(otherFoe: Foe): Foe {
     const newFoe: Foe = new Foe();
     newFoe.Name = this.Name;
     newFoe.Inherits = this.Inherits;
     newFoe.Type = this.Type;
 
     // Inherit single values
-    if (this.Group != null && this.Group != '') { newFoe.Group = this.Group; } else { newFoe.Group = otherFoe.Group; }
+    if (this.Group) { newFoe.Group = this.Group; } else { newFoe.Group = otherFoe.Group; }
     newFoe.HpMultiplier = this.inheritValue(this.HpMultiplier, otherFoe.HpMultiplier);
     newFoe.Speed = this.inheritValue(this.Speed, otherFoe.Speed);
     newFoe.Run = this.inheritValue(this.Run, otherFoe.Run);
@@ -69,7 +69,8 @@ export class Foe implements Deserializable<Foe> {
     newFoe.LightDamage = this.inheritValue(this.LightDamage, otherFoe.LightDamage);
     newFoe.HeavyDamage = this.inheritValue(this.HeavyDamage, otherFoe.HeavyDamage);
     newFoe.CriticalDamage = this.inheritValue(this.CriticalDamage, otherFoe.CriticalDamage);
-    newFoe.LightDamageDie = this.inheritValue(this.HeavyDamageDie, otherFoe.HeavyDamageDie);
+    newFoe.LightDamageDie = this.inheritValue(this.LightDamageDie, otherFoe.LightDamageDie);
+    newFoe.HeavyDamageDie = this.inheritValue(this.HeavyDamageDie, otherFoe.HeavyDamageDie);
     newFoe.CriticalDamageDie = this.inheritValue(this.CriticalDamageDie, otherFoe.CriticalDamageDie);
     newFoe.DamageType = this.inheritValue(this.DamageType, otherFoe.DamageType);
     newFoe.FactionBlight = this.inheritValue(this.FactionBlight, otherFoe.FactionBlight);
@@ -90,9 +91,9 @@ export class Foe implements Deserializable<Foe> {
     newFoe.BodyParts = this.BodyParts.concat(otherFoe.BodyParts);
 
     for (let i = 0; i < newFoe.Traits.length; i++) {
-      let statName = newFoe.Traits[i].Name.toLowerCase();
+      const statName = newFoe.Traits[i].Name.toLowerCase();
       for (let j = i + 1; j < newFoe.Traits.length; ++j) {
-        let otherStatName = newFoe.Traits[j].Name.toLowerCase();
+        const otherStatName = newFoe.Traits[j].Name.toLowerCase();
         if (statName === otherStatName) {
           newFoe.Traits.splice(j, 1);
         }
@@ -102,71 +103,11 @@ export class Foe implements Deserializable<Foe> {
     return newFoe;
   }
 
-  inheritValue(currentValue, inheritedValue) {
+  inheritValue(currentValue, inheritedValue): any {
     if (currentValue || currentValue === 0) {
       return currentValue;
     } else {
       return inheritedValue;
     }
   }
-}
-
-export class BodyPart {
-  Name: string;
-  HP: number;
-  Description: string;
-}
-
-
-export class Phase {
-  Name: string;
-  Description: string;
-  Traits: Trait[];
-  Actions: Action[];
-}
-
-export class Trait {
-  Name: string;
-  Tags: string[];
-  Description: string;
-  AddHp: number;
-  AddArmor: number;
-  MaxArmor: number;
-  NoRun: boolean;
-  NoDash: boolean;
-  Nonessential: boolean;
-}
-
-export class Interrupt {
-  Name: string;
-  Count: number;
-  Tags: string[];
-  Description: string;
-}
-
-export class Action {
-  Name: string;
-  ActionCost: number;
-  Tags: string[];
-  Description: string;
-  Hit: string;
-  CriticalHit: string;
-  Miss: string;
-  AreaEffect: string;
-  Effect: string;
-  Collide: string;
-  BlightBoost: Blight[];
-  Combos: Action[];
-}
-
-export enum DamageType {
-  Physical,
-  Magical
-}
-
-export enum Blight {
-  Burning,
-  Electrified,
-  Frostbite,
-  Poisoned
 }
