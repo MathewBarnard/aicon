@@ -25,7 +25,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatOptionModule} from '@angular/material/core';
 import {MatDividerModule} from '@angular/material/divider';
-import { CombatantViewComponent } from './components/bookkeeper/combatant-view/combatant-view.component';
 
 @NgModule({
   declarations: [
@@ -34,8 +33,7 @@ import { CombatantViewComponent } from './components/bookkeeper/combatant-view/c
     EncounterTrackerComponent,
     AddFoeModalComponent,
     FoeViewComponent,
-    HealthAndVigorModalComponent,
-    CombatantViewComponent
+    HealthAndVigorModalComponent
   ],
   imports: [
     BrowserModule,

@@ -9,36 +9,47 @@
       </mat-select>
     </mat-form-field>
     <br><br>
+    <h3>Filters</h3>
     <div fxLayout="row wrap" fxLayoutGap="20px grid">
-      <mat-form-field fxFlex="50" appearance="fill">
-        <mat-label>Select Class</mat-label>
-        <mat-select [(ngModel)]="selectedClass">
-          <mat-option value="">None</mat-option>
-          <mat-option *ngFor="let foeClass of foeFactory.getClasses()" value="{{foeClass}}">{{foeClass}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field fxFlex="50" appearance="fill">
-        <mat-label>Select Job</mat-label>
-        <mat-select [(ngModel)]="selectedJob" (selectionChange)="jobChanged($event)" [disabled]="!selectedClass">
-          <mat-option value="">None</mat-option>
-          <mat-option *ngFor="let job of foeFactory.getJobs(selectedClass)" value="{{job}}">{{job}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field fxFlex="50" appearance="fill">
-        <mat-label>Select Faction (optional)</mat-label>
-        <mat-select [(ngModel)]="selectedFaction">
-          <mat-option value="">None</mat-option>
+      <mat-form-field fxFlex="33" appearance="fill">
+        <mat-label>Faction</mat-label>
+        <mat-select [(ngModel)]="factionFilter"  (selectionChange)="factionFilterChanged($event)">
+          <mat-option value="">Any</mat-option>
           <mat-option *ngFor="let foeFaction of foeFactory.getFactions()" value="{{foeFaction}}">{{foeFaction}}</mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field fxFlex="33" appearance="fill">
+        <mat-label>Class</mat-label>
+        <mat-select [(ngModel)]="classFilter" (selectionChange)="classFilterChanged($event)">
+          <mat-option value="">Any</mat-option>
+          <mat-option *ngFor="let class of foeFactory.getClasses()" value="{{class}}">{{class}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="33" appearance="fill">
+        <mat-label>Special Class</mat-label>
+        <mat-select [(ngModel)]="specialClassFilter" (selectionChange)="specialClassFilterChanged($event)">
+          <mat-option value="">Any</mat-option>
+          <mat-option *ngFor="let specialClass of foeFactory.getSpecialClasses()" value="{{specialClass}}">{{specialClass}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <h3>Selection</h3>
+    <div fxLayout="row wrap" fxLayoutGap="20px grid">
       <mat-form-field fxFlex="50" appearance="fill">
-        <mat-label>Select Template</mat-label>
-        <mat-select [(ngModel)]="selectedTemplate" (selectionChange)="templateChanged($event)" [disabled]="!selectedFaction">
-          <mat-option value="">None</mat-option>
-          <mat-option *ngFor="let template of foeFactory.getTemplates(selectedFaction)" value="{{template}}">{{template}}</mat-option>
+        <mat-label>Foe</mat-label>
+        <mat-select [(ngModel)]="foeSelected">
+          <mat-option value="">Any</mat-option>
+          <mat-option *ngFor="let foe of foeFactory.getJobs(classFilter)" value="{{foe}}">{{foe}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="50" appearance="fill">
+        <mat-label>Template</mat-label>
+        <mat-select [(ngModel)]="templateSelected">
+          <mat-option value="">Any</mat-option>
+          <mat-option *ngFor="let template of foeFactory.getTemplates(factionFilter)" value="{{templateSelected}}">{{templateSelected}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
-  <button mat-raised-button color="primary" [disabled]="!chapter || !selectedClass || !selectedJob" (click)="addToEncounter()">Add to Encounter</button>
+  <button mat-raised-button color="primary" (click)="addToEncounter()">Add to Encounter</button>
 </div>

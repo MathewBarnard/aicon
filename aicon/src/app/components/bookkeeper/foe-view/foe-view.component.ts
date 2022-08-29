@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {EncounterService} from '../../../services/encounter.service';
 import {MatDialog} from '@angular/material/dialog';
-import {ActiveFoe} from '../../../models/foes/active-foe.model';
+import {ActiveFoe, Blight} from '../../../models/foes/active-foe.model';
 import {StatusType} from '../../../models/enums/status.model';
 import {PositiveEffectType} from '../../../models/enums/positive-effect.model';
-import {Blight} from '../../../models/combatants/combatant.model';
 import {AddFoeModalComponent} from '../modals/add-foe-modal/add-foe-modal.component';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Foe} from "../../models/foes/foe.model";
+import {Statistics} from '../../models/foes/statistics';
 
 @Component({
   selector: 'app-home',
@@ -8,13 +8,12 @@ import {Foe} from "../../models/foes/foe.model";
 })
 export class HomeComponent implements OnInit {
 
-  enemies: Foe[];
+  enemies: Statistics[];
 
   constructor() { }
 
   ngOnInit(): void {
-    this.enemies = [
-    ]
+    this.enemies = [];
   }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Foe} from '../models/foes/foe.model';
+import {Statistics} from '../models/foes/statistics';
 import {FoeFactory} from '../models/foes/foe-factory';
 import {ActiveFoe} from '../models/foes/active-foe.model';
 
@@ -34,7 +34,7 @@ export class EncounterService {
     this.turn = 1;
   }
 
-  createNewFoe(foe: Foe, chapter: number): void {
+  createNewFoe(foe: Statistics, chapter: number): void {
     try {
       const activeFoe = new ActiveFoe();
       activeFoe.createNew(chapter, foe);

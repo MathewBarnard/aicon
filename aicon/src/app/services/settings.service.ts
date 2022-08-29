@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Foe} from '../models/foes/foe.model';
+import {Statistics} from '../models/foes/statistics';
 import {FoeFactory} from '../models/foes/foe-factory';
 import {ActiveFoe} from '../models/foes/active-foe.model';
 import {Deserializable} from "../models/deserializable.interface";

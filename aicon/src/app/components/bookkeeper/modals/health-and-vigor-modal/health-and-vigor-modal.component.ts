@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {Foe} from "../../../../models/foes/foe.model";
+import {Statistics} from "../../../../models/foes/statistics";
 
 @Component({
   selector: 'app-health-and-vigor-modal',
@@ -10,7 +10,7 @@ import {Foe} from "../../../../models/foes/foe.model";
 export class HealthAndVigorModalComponent implements OnInit {
 
   @Inject(MAT_DIALOG_DATA) public data: any
-  foe: Foe;
+  foe: Statistics;
 
   constructor(public dialogRef: MatDialogRef<HealthAndVigorModalComponent>) { }
 

@@ -1,29 +1,19 @@
-import {Foe} from './foe.model';
+import {Statistics} from './statistics';
 import {PositiveEffect} from '../enums/positive-effect.model';
 import {Deserializable} from '../deserializable.interface';
 
 export class ActiveFoe implements Deserializable<ActiveFoe>{
-  chapter: number;
   hpCurrent: number;
   hpMax: number;
   vigor: number;
-  attackCurrent: number;
-  lightDamageCurrent: number;
-  heavyDamageCurrent: number;
-  criticalDamageCurrent: number;
-  frayCurrent: number;
-  healthCurrent: number;
-  defenseCurrent: number;
-  armorCurrent: number;
   positiveEffects: PositiveEffect[];
-
   positiveStatuses: PositiveStatuses;
   statuses: Statuses;
   blights: Blights;
 
   rechargingActions: any[];
 
-  data: Foe;
+  statistics: Statistics;
 
   constructor() {
     this.statuses = new Statuses();
@@ -34,9 +24,9 @@ export class ActiveFoe implements Deserializable<ActiveFoe>{
     this.rechargingActions = [];
   }
 
-  createNew(chapter: number, data: Foe): void {
+  createNew(chapter: number, data: Statistics): void {
     if (chapter && data) {
-      this.data = data;
+      this.statistics = data;
       this.generateStartingStats(chapter);
     }
   }
@@ -51,69 +41,12 @@ export class ActiveFoe implements Deserializable<ActiveFoe>{
   }
 
   generateStartingStats(chapter: number): void {
-    this.chapter = Number(chapter);
-
-    ////////////////////////////////////////////////////////////////////////////////////
-    //// DAMAGE
-    this.lightDamageCurrent = this.data.LightDamage + this.chapter;
-    this.heavyDamageCurrent = this.data.HeavyDamage + this.chapter;
-    this.criticalDamageCurrent = this.data.CriticalDamage + this.chapter;
-
-    this.attackCurrent = this.data.Attack[this.chapter - 1];
-
     ////////////////////////////////////////////////////////////////////////////////////
     //// HP
-    let hp = this.data.Health[this.chapter - 1] * (this.data.HPMultiplier ? this.data.HPMultiplier : 4);
-
-    if (this.data.Traits.map(t => t.Name).includes('Tenacious')) {
-      hp = Math.round(hp * 1.25);
-    }
-
-    // If mob set to 1
-    if (this.data.Group === 'Mob') {
-      hp = 1;
-    }
+    const hp = this.statistics.vitality * (this.statistics.hpMultiplier ? this.statistics.hpMultiplier : 4);
 
     this.hpCurrent = hp;
     this.hpMax = hp;
-
-    ////////////////////////////////////////////////////////////////////////////////////
-    //// VIGOR
-    let v = 0;
-
-    if (this.data.Traits.map(t => t.Name).includes('Toughness')) {
-      v = 1;
-    }
-
-    this.vigor = v * this.data.Health[this.chapter  - 1];
-
-    ////////////////////////////////////////////////////////////////////////////////////
-    //// ARMOR
-    let armor = this.data.Armor[this.chapter - 1];
-
-    // Apply Improved Armor Trait
-    if (this.data.Traits.find(t => t.Name === 'Improved Armor')) {
-      armor += this.data.Traits.find(t => t.Name === 'Improved Armor').AddArmor;
-    }
-
-    // Poor Armor Trait
-    if (this.data.Traits.map(t => t.Name).includes('Poor Armor')) {
-      armor = 0;
-    }
-
-    this.armorCurrent = armor;
-
-    ////////////////////////////////////////////////////////////////////////////////////
-    /// DEFENSE
-    const defense = this.data.Defense;
-    this.defenseCurrent = defense;
-
-
-    ////////////////////////////////////////////////////////////////////////////////////
-    /// TRAITS
-    if (this.data.Traits.map(t => t.Name).includes('Slow')) {
-      this.statuses.slow = true;
-    }
   }
 
   reduceHp(value: number): number {
@@ -244,4 +177,11 @@ export class PositiveStatuses implements Deserializable<PositiveStatuses>{
     Object.assign(this, input);
     return this;
   }
+}
+
+export enum Blight {
+  Burning,
+  Electrified,
+  Frostbite,
+  Poisoned
 }

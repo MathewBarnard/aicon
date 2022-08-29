@@ -1,12 +1,12 @@
 <div *ngFor="let foe of encounterService.foes" class="combatant-panel"
-     [ngClass]="{'heavy': foe.data.Group === 'Heavy', 'artillery' : foe.data.Group === 'Artillery',
-                     'leader': foe.data.Group === 'Leader', 'skirmisher' : foe.data.Group === 'Skirmisher',
-                     'elite' : foe.data.Group === 'Elite', 'mob' : foe.data.Group === 'Mob'}"
+     [ngClass]="{'heavy': foe.statistics.class === 'Heavy', 'artillery' : foe.statistics.class === 'Artillery',
+                     'leader': foe.statistics.class === 'Leader', 'skirmisher' : foe.statistics.class === 'Skirmisher',
+                     'elite' : foe.statistics.class === 'Elite', 'mob' : foe.statistics.class === 'Mob'}"
 >
   <mat-expansion-panel>
     <mat-expansion-panel-header style="height: 50px;">
       <mat-panel-title style="margin-right: 0;" fxLayout="row" fxLayoutAlign=" center">
-        <div fxFlex="20">{{foe.data.Name}}</div>
+        <div fxFlex="20">{{foe.statistics.name}}</div>
         <div fxFlex="78" style="background-color: white; color:black; height:100%; border-radius: 8px; padding-left: 8px; padding-right: 8px;" fxLayout="row" fxLayoutAlign=" center">
           <button mat-flat-button class="small-button" style="padding-left: 10px; padding-right: 10px;">
             <div fxLayout="row" fxLayoutAlign=" center">
@@ -47,42 +47,41 @@
       <mat-tab [label]="'Stat Block'">
         <br>
         <div fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Damage</div><div>[{{foe.data.LightDamageDie}} / {{foe.data.HeavyDamageDie}} / {{foe.data.CriticalDamageDie}}] +{{foe.chapter}}</div></div>
-          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Fray</div><div>{{foe.data.FrayDamage[foe.chapter - 1]}}</div></div>
-          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Attack</div><div>+{{foe.attackCurrent}}</div></div>
-          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Damage Type</div><div>{{foe.data.DamageType}}</div></div>
-          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Health</div><div>{{foe.data.Health[foe.chapter - 1]}}</div></div>
-          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Defense</div><div>{{foe.defenseCurrent}}</div></div>
-          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Armor</div><div>{{foe.armorCurrent}}</div></div>
-          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Speed</div><div>{{foe.data.Speed}} {{foe.data.Run}}/{{foe.data.Dash}}</div></div>
+          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Damage</div><div>D{{foe.statistics.damageDie}}</div></div>
+          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Fray</div><div>{{foe.statistics.frayDamage}}</div></div>
+          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Health</div><div>{{foe.statistics.vitality}}</div></div>
+          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Defense</div><div>{{foe.statistics.defense}}</div></div>
+          <div fxLayout="column" fxLayoutAlign=" center"><div class="pink-text">Speed</div><div>{{foe.statistics.speed}} {{foe.statistics.speed * foe.statistics.dashMultiplier}}</div></div>
 
         </div>
         <br>
         <div fxLayout="row wrap" fxLayoutGap="20px grid" style="width: 100%;">
           <div fxFlex="100">
             <div class="pink-text">TRAITS</div>
-            <div fxLayout="row wrap" fxLayoutAlign="space-between ">
-              <button mat-flat-button *ngFor="let trait of foe.data.Traits" matTooltip="{{trait.Description}}" #tooltip="matTooltip" class="no-zoom"  matTooltipClass="tooltip" (click)="tooltip.toggle()">{{trait.Name}}</button>
+            <div fxLayout="column" fxLayoutGap="20px grid">
+              <ng-container *ngFor="let trait of foe.statistics.actualTraits">
+                <span *ngIf="trait.description"><b>{{trait.name}}:</b> {{trait.description}}</span>
+              </ng-container>
             </div>
           </div>
           <div fxFlex="100">
             <div class="pink-text">ACTIONS</div>
             <div fxLayout="column" fxLayoutGap="20px grid">
-              <ng-container *ngFor="let action of foe.data.Actions">
+              <ng-container *ngFor="let action of foe.statistics.getActions()">
                 <div [ngClass]="{'cursor-pointer': isRecharge(action), 'recharging': foe.isRecharging(action)}" (click)="toggleRecharge(action, foe)">
-                  <b class="trait-tag">{{action.Name}} ({{action.ActionCost}} {{action.ActionCost > 1 ? 'actions' : 'action'}}
-                    {{action.Tags ? ',' : ''}} {{action.Tags ? action.Tags.join(", ") : ' '}}): </b> {{action.Description}}
-                  <span *ngIf="action.Hit"><i>On hit: </i>{{action.Hit}} </span>
-                  <span *ngIf="action.Miss"><i>On miss: </i>{{action.Miss}} </span>
-                  <span *ngIf="action.Effect">{{action.Effect}} </span>
-                  <span *ngIf="action.Collide"><b>Collide: </b>{{action.Collide}} </span>
-                  <span *ngIf="action.AreaEffect"><b>Area effect: </b>{{action.AreaEffect}}</span>
-                  <span *ngIf="action.BlightBoost"><b>Blightboost: </b>{{action.BlightBoost}}</span>
+                  <b class="trait-tag">{{action.name}} ({{action.actionCost}} {{action.actionCost > 1 ? 'actions' : 'action'}}
+                    {{action.tags ? ',' : ''}} {{action.tags ? action.tags.join(", ") : ' '}}): </b> {{action.description}}
+                  <span *ngIf="action.hit"><i>On hit: </i>{{action.hit}} </span>
+                  <span *ngIf="action.miss"><i>On miss: </i>{{action.miss}} </span>
+                  <span *ngFor="let effect of action.effects">{{action.effects}} </span>
+                  <span *ngIf="action.collide"><b>Collide: </b>{{action.collide}} </span>
+                  <span *ngIf="action.areaEffect"><b>Area effect: </b>{{action.areaEffect}}</span>
+                  <span *ngIf="action.blightBoost"><b>Blightboost: </b>{{action.blightBoost}}</span>
                 </div>
               </ng-container>
-              <ng-container *ngFor="let action of foe.data.Interrupts">
+              <ng-container *ngFor="let action of foe.statistics.interrupts">
                 <div [ngClass]="{'cursor-pointer': isRecharge(action), 'recharging': foe.isRecharging(action)}" (click)="toggleRecharge(action, foe)">
-                  <b class="trait-tag">{{action.Name}} (Interrupt{{action.Count ? ' ' : ''}}{{action.Count ? action.Count : ''}}{{action.Tags ? ', ' : ''}}{{action.Tags ? action.Tags.join(", ") : ''}}): </b> {{action.Description}}
+                  <b class="trait-tag">{{action.name}} (Interrupt{{action.count ? ' ' : ''}}{{action.count ? action.count : ''}}{{action.tags ? ', ' : ''}}{{action.tags ? action.tags.join(", ") : ''}}): </b> {{action.description}}
                 </div>
               </ng-container>
             </div>

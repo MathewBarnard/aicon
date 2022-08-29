@@ -17,8 +17,8 @@ export class EncounterTrackerComponent implements OnInit {
   ngOnInit(): void {}
 
   openAddFoeDialog() {
-    let dialogRef = this.dialog.open(AddFoeModalComponent, {
-      height: '400px',
+    const dialogRef = this.dialog.open(AddFoeModalComponent, {
+      height: '500px',
       width: '600px',
     });
 
