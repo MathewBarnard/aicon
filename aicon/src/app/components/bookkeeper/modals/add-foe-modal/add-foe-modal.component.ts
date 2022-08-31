@@ -23,6 +23,8 @@ export class AddFoeModalComponent implements OnInit {
   templateSelected: string;
   specialTemplateSelected: string;
 
+  availableFoes: string[];
+
   foe: Statistics;
 
   constructor(public dialogRef: MatDialogRef<AddFoeModalComponent>, public apiService: ApiService,
@@ -30,6 +32,8 @@ export class AddFoeModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.chapter = 1;
+
+    this.getFoes();
   }
 
 
@@ -49,13 +53,26 @@ export class AddFoeModalComponent implements OnInit {
 
   factionFilterChanged(event): void {
     this.factionFilter = event.value;
+    this.getFoes();
   }
 
   classFilterChanged(event): void {
     this.classFilter = event.value;
+    this.getFoes();
   }
 
   specialClassFilterChanged(event): void {
     this.specialClassFilter = event.value;
+    this.getFoes();
+  }
+
+  getFoes(): void {
+    this.apiService.getFoes(
+      this.classFilter !== 'Any' ? this.classFilter : null,
+      this.factionFilter !== 'Any' ? this.factionFilter : null,
+      this.specialClassFilter !== 'Any' ? this.specialClassFilter : null)
+      .subscribe(res => {
+        this.availableFoes = res;
+    });
   }
 }

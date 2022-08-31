@@ -39,7 +39,7 @@ export class Statistics implements Deserializable<Statistics> {
   phases: PhaseData[];
   extraAbilitySets: AbilitySetData[];
   usesSpecialTemplates: string[];
-  conditionalAbilites: ConditionalAbilityData[];
+  conditionalAbilities: ConditionalAbilityData[];
   traits: string[];
   actualTraits: TraitData[];
   setupTraits: TraitData[];
@@ -55,7 +55,7 @@ export class Statistics implements Deserializable<Statistics> {
     this.removeUsesSpecialTemplates = [];
     this.extraAbilitySets = [];
     this.usesSpecialTemplates = [];
-    this.conditionalAbilites = [];
+    this.conditionalAbilities = [];
     this.traits = [];
     this.actualTraits = [];
     this.setupTraits = [];
@@ -66,7 +66,13 @@ export class Statistics implements Deserializable<Statistics> {
   // tslint:disable-next-line:no-shadowed-variable
   deserialize(input: any): Statistics {
     Object.assign(this, input);
+    this.bodyParts = input.bodyParts.map(x => new BodyPartData().deserialize(x));
+    this.phases = input.phases.map(x => new PhaseData().deserialize(x));
     this.actions = input.actions.map(x => new ActionData().deserialize(x));
+    this.interrupts = input.interrupts.map(x => new InterruptData().deserialize(x));
+    this.actualTraits = input.actualTraits.map(x => new TraitData().deserialize(x));
+    this.setupTraits = input.setupTraits.map(x => new TraitData().deserialize(x));
+    this.conditionalAbilities = input.conditionalAbilities.map(x => new ConditionalAbilityData().deserialize(x));
     return this;
   }
 
@@ -113,6 +119,19 @@ export class TraitData {
     this.rolls = [];
     this.summons = [];
   }
+
+  // tslint:disable-next-line:no-shadowed-variable
+  public deserialize(input: any): TraitData {
+    Object.assign(this, input);
+    this.customComponents = input.customComponents.map(x => new ItemData().deserialize(x));
+    this.listedItems = input.listedItems.map(x => new ItemData().deserialize(x));
+    this.actions = input.actions.map(x => new ActionData().deserialize(x));
+    this.extraActions = input.extraActions.map(x => new ActionData().deserialize(x));
+    this.interrupts = input.interrupts.map(x => new InterruptData().deserialize(x));
+    this.rolls = input.rolls.map(x => new RollData().deserialize(x));
+    this.summons = input.summons.map(x => new SummonData().deserialize(x));
+    return this;
+  }
 }
 
 export class InterruptData {
@@ -136,6 +155,14 @@ export class InterruptData {
     this.effects = [];
     this.listedItems = [];
     this.summons = [];
+  }
+
+  // tslint:disable-next-line:no-shadowed-variable
+  public deserialize(input: any): InterruptData {
+    Object.assign(this, input);
+    this.listedItems = input.listedItems.map(x => new ItemData().deserialize(x));
+    this.summons = input.summons.map(x => new SummonData().deserialize(x));
+    return this;
   }
 }
 
@@ -199,6 +226,12 @@ export class BodyPartData {
   hp: number;
   hpMultiplierByPlayers: boolean;
   description: string;
+
+  // tslint:disable-next-line:no-shadowed-variable
+  public deserialize(input: any): BodyPartData {
+    Object.assign(this, input);
+    return this;
+  }
 }
 
 export class PhaseData {
@@ -215,6 +248,14 @@ export class PhaseData {
     this.traits = [];
     this.interrupts = [];
     this.actions = [];
+  }
+
+  // tslint:disable-next-line:no-shadowed-variable
+  public deserialize(input: any): PhaseData {
+    Object.assign(this, input);
+    this.listedItems = input.listedItems.map(x => new ItemData().deserialize(x));
+    this.interrupts = input.interrupts.map(x => new InterruptData().deserialize(x));
+    return this;
   }
 }
 
@@ -244,6 +285,17 @@ export class SummonData {
     this.listedActions = [];
     this.listedInterrupts = [];
   }
+
+  // tslint:disable-next-line:no-shadowed-variable
+  public deserialize(input: any): SummonData {
+    Object.assign(this, input);
+    this.listedItems = input.listedItems.map(x => new ItemData().deserialize(x));
+    this.actions = input.actions.map(x => new ActionData().deserialize(x));
+    this.interrupts = input.interrupts.map(x => new InterruptData().deserialize(x));
+    this.listedActions = input.listedActions.map(x => new ActionData().deserialize(x));
+    this.listedInterrupts = input.listedInterrupts.map(x => new InterruptData().deserialize(x));
+    return this;
+  }
 }
 
 export class RollData {
@@ -255,6 +307,13 @@ export class RollData {
   description: string;
 
   customComponents: ItemData[];
+
+  // tslint:disable-next-line:no-shadowed-variable
+  public deserialize(input: any): RollData {
+    Object.assign(this, input);
+    this.customComponents.map(x => new ItemData().deserialize(x));
+    return this;
+  }
 }
 
 export class ItemData {
@@ -265,6 +324,13 @@ export class ItemData {
 
   public constructor() {
     this.customComponents = [];
+  }
+
+  // tslint:disable-next-line:no-shadowed-variable
+  public deserialize(input: any): ItemData {
+    Object.assign(this, input);
+    this.customComponents = input.customComponents.map(x => new ItemData().deserialize(x));
+    return this;
   }
 }
 
@@ -281,6 +347,14 @@ export class AbilitySetData {
     this.traits = [];
     this.actions = [];
     this.interrupts = [];
+  }
+
+  // tslint:disable-next-line:no-shadowed-variable
+  public deserialize(input: any): AbilitySetData {
+    Object.assign(this, input);
+    this.actions = input.actions.map(x => new ActionData().deserialize(x));
+    this.interrupts = input.interrupts.map(x => new InterruptData().deserialize(x));
+    return this;
   }
 }
 
@@ -312,5 +386,13 @@ export class ConditionalAbilityData {
     this.removeSetupTraits = [];
     this.setupTraits = [];
     this.useSpecialTemplates = [];
+  }
+
+  // tslint:disable-next-line:no-shadowed-variable
+  public deserialize(input: any): ConditionalAbilityData {
+    Object.assign(this, input);
+    this.actions = input.actions.map(x => new ActionData().deserialize(x));
+    this.setupTraits = input.setupTraits.map(x => new TraitData().deserialize(x));
+    return this;
   }
 }

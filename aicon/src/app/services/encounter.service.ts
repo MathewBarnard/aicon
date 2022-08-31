@@ -20,13 +20,17 @@ export class EncounterService {
         const sessionObj = JSON.parse(session);
         this.turn = sessionObj.turn;
         for (const foeData of sessionObj.foes) {
-          const foe = this.foeFactory.loadFoe(foeData);
+          const foe = new ActiveFoe().deserialize(foeData);
           this.addFoeToSession(foe);
         }
       }
     } catch (error) {
       window.alert('An error occurred while loading your session.');
     }
+  }
+
+  clear(): void {
+    this.foes = [];
   }
 
   startEncounter(foes: ActiveFoe[]): void {

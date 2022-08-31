@@ -34,6 +34,7 @@ export class ActiveFoe implements Deserializable<ActiveFoe>{
   deserialize(input: any): ActiveFoe {
     // noinspection TypeScriptValidateTypes
     Object.assign(this, input);
+    this.statistics = input.statistics ? new Statistics().deserialize(input.statistics) : new Statistics();
     this.statuses = input.statuses ? new Statuses().deserialize(input.statuses) : new Statuses();
     this.positiveStatuses = input.positiveStatuses ? new PositiveStatuses().deserialize(input.positiveStatuses) : new PositiveStatuses();
     this.blights = input.blights ? new Blights().deserialize(input.blights) : new Blights();
@@ -47,6 +48,8 @@ export class ActiveFoe implements Deserializable<ActiveFoe>{
 
     this.hpCurrent = hp;
     this.hpMax = hp;
+
+    this.vigor = 0;
   }
 
   reduceHp(value: number): number {

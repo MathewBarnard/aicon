@@ -22,7 +22,7 @@ export class ApiService {
         headers: new HttpHeaders({'Content-Type': 'application/json;charset=utf-8'}).append('Access-Control-Allow-Origin', '*')
       };
 
-      return this.http.post<Statistics>(`${environment.apiAddress}/buildfoe`,
+      return this.http.post<Statistics>(`${environment.apiAddress}/foe`,
         {
           foeName,
           chapter,
@@ -34,5 +34,25 @@ export class ApiService {
        .pipe(
          map(x => new Statistics().deserialize(x))
        );
+  }
+
+  public getFoes(
+    classFilter: string,
+    factionFilter: string,
+    specialClassFilter: string): Observable<string[]> {
+
+    const params = {};
+
+    if (classFilter) { Object.assign(params, { classFilter }); }
+    if (factionFilter) { Object.assign(params, { factionFilter }); }
+    if (specialClassFilter) { Object.assign(params, { specialClassFilter }); }
+
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json;charset=utf-8'})
+        .append('Access-Control-Allow-Origin', '*'),
+      params
+    };
+
+    return this.http.get<string[]>(`${environment.apiAddress}/foe`, httpOptions);
   }
 }
